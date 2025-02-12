@@ -1,11 +1,5 @@
 import { Logo } from "@/entrypoints/content/Logo.tsx";
-import OpenAI from "openai";
 import { useEffect } from "react";
-
-const openai = new OpenAI({
-	apiKey: import.meta.env.VITE_OPENAI_API_KEY,
-	dangerouslyAllowBrowser: true,
-});
 
 export const App: React.FC = () => {
 	const [translatedText, setTranslatedText] = useState("");
@@ -18,20 +12,19 @@ export const App: React.FC = () => {
 
 	const handleTranslate = async () => {
 		showTranslatedArea(true);
-		const completion = await openai.chat.completions.create({
-			messages: [
-				{ role: "system", content: "次のテキストを日本語に訳してください" },
-				{ role: "user", content: selectedText },
-			],
-			model: "gpt-3.5-turbo",
-			stream: true,
-		});
 
-		for await (const chunk of completion) {
-			const translatedText = chunk.choices.at(0)?.delta.content || "";
-			if (translatedText) {
-				setTranslatedText(translatedText);
-			}
+		try {
+			// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+			const translator = await (self as any).ai.translator.create({
+				sourceLanguage: "en",
+				targetLanguage: "ja",
+			});
+
+			const text = await translator.translate(selectedText);
+			setTranslatedText(text);
+		} catch (e) {
+			console.error(e);
+			setTranslatedText((e as Error).message);
 		}
 	};
 
@@ -50,14 +43,6 @@ export const App: React.FC = () => {
 	}, [setTriggerPosition, setSelectedText, showTranslatedArea]);
 
 	if (!triggerPosition) return null;
-
-	console.log(
-		JSON.stringify(
-			{ show, translatedText, triggerPosition, selectedText },
-			null,
-			2,
-		),
-	);
 
 	return (
 		<div

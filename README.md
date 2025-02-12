@@ -1,2 +1,3 @@
-# gpt-translator
-Translate by GPT-4o
+# translator-chrome-extension
+
+Translated by [Translator API](https://developer.chrome.com/docs/ai/translator-api?hl=ja)
