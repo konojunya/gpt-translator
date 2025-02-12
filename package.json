@@ -1,0 +1,42 @@
+{
+	"name": "gpt-translator",
+	"version": "0.0.0",
+	"description": "Translate text using GPT",
+	"keywords": [
+		"gpt",
+		"translator",
+		"chrome",
+		"extension"
+	],
+	"author": "Junya Kono",
+	"license": "MIT",
+	"scripts": {
+		"dev": "wxt",
+		"dev:firefox": "wxt -b firefox",
+		"build": "wxt build",
+		"build:firefox": "wxt build -b firefox",
+		"zip": "wxt zip",
+		"zip:firefox": "wxt zip -b firefox",
+		"postinstall": "wxt prepare",
+		"lint": "biome lint --write",
+		"format": "biome format --write",
+		"check": "biome check --write"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^1.9.4",
+		"@tailwindcss/vite": "^4.0.6",
+		"@types/chrome": "^0.0.304",
+		"@types/react": "^19.0.8",
+		"@types/react-dom": "^19.0.3",
+		"@vitejs/plugin-react": "^4.3.4",
+		"@wxt-dev/module-react": "^1.1.3",
+		"tailwindcss": "^4.0.6",
+		"typescript": "^5.7.3",
+		"wxt": "^0.19.27"
+	},
+	"dependencies": {
+		"openai": "^4.84.0",
+		"react": "^19.0.0",
+		"react-dom": "^19.0.0"
+	}
+}
